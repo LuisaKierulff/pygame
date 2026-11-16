@@ -1,2 +1,4 @@
 # pygame
-Projeto pygame desenvolvido em trio
+#Projeto pygame desenvolvido em trio
+
+pygame.init() 
