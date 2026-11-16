@@ -24,6 +24,10 @@ sushi_x = 0
 sushi_y = 100
 
 sushi_speedx = 3
+sushi_speedy = 5
+
+caindo = False
+pousou = False
 
 BASE_WIDTH = 150
 BASE_HEIGHT = 20
@@ -37,15 +41,30 @@ while game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
-    sushi_x += sushi_speedx
 
-    if sushi_x + SUSHI_WIDTH >= WIDTH:
-        sushi_x = WIDTH - SUSHI_WIDTH
-        sushi_speedx = -sushi_speedx
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                if not caindo and not pousou:
+                    caindo = True
 
-    if sushi_x <= 0:
-        sushi_x = 0
-        sushi_speedx = -sushi_speedx
+    if not caindo and not pousou:
+        sushi_x += sushi_speedx
+
+        if sushi_x + SUSHI_WIDTH >= WIDTH:
+            sushi_x = WIDTH - SUSHI_WIDTH
+            sushi_speedx = -sushi_speedx
+
+        if sushi_x <= 0:
+            sushi_x = 0
+            sushi_speedx = -sushi_speedx
+
+    if caindo:
+        sushi_y += sushi_speedy
+
+        if sushi_y + SUSHI_HEIGHT >= base_y:
+            sushi_y = base_y - SUSHI_HEIGHT
+            caindo = False
+            pousou = True
 
     window.fill(BRANCO)
     pygame.draw.rect(window,MARROM,(base_x, base_y, BASE_WIDTH, BASE_HEIGHT))
@@ -53,5 +72,7 @@ while game:
     pygame.display.update()
     clock.tick(FPS)
 pygame.quit()
+
+
 
 
